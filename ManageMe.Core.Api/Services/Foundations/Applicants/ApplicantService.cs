@@ -26,9 +26,7 @@ namespace ManageMe.Core.Api.Services.Foundations.Applicants
             this.dateTimeBroker = dateTimeBroker;
         }
 
-        public ValueTask<Applicant> AddApplicantAsync(Applicant applicant)
-        {
-            throw new NotImplementedException();
-        }
+        public async ValueTask<Applicant> AddApplicantAsync(Applicant applicant) =>
+            await this.storageBroker.InsertApplicantAsync(applicant);
     }
 }
