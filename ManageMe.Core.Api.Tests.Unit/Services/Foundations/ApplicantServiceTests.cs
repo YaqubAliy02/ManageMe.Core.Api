@@ -20,7 +20,6 @@ namespace ManageMe.Core.Api.Tests.Unit.Services.Foundations
         private readonly Mock<IStorageBroker> storageBrokerMock;
         private readonly Mock<ILoggingBroker> loggingBrokerMock;
         private readonly Mock<IDateTimeBroker> dateTimeBrokerMock;
-
         private readonly IApplicantService applicantService;
 
         public ApplicantServiceTests()
@@ -53,8 +52,6 @@ namespace ManageMe.Core.Api.Tests.Unit.Services.Foundations
                 .OnType<DateTimeOffset>().Use(dates);
 
             return filler;
-        }
-
-        
+        }   
     }
 }

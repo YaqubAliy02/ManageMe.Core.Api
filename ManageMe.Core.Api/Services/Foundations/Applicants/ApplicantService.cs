@@ -10,7 +10,7 @@ using ManageMe.Core.Api.Models.Applicants;
 
 namespace ManageMe.Core.Api.Services.Foundations.Applicants
 {
-    public class ApplicantService : IApplicantService
+    public partial class ApplicantService : IApplicantService
     {
         private readonly IStorageBroker storageBroker;
         private readonly ILoggingBroker loggingBroker;
@@ -27,6 +27,7 @@ namespace ManageMe.Core.Api.Services.Foundations.Applicants
         }
 
         public async ValueTask<Applicant> AddApplicantAsync(Applicant applicant) =>
-            await this.storageBroker.InsertApplicantAsync(applicant);
+           await this.storageBroker.InsertApplicantAsync(applicant);
+           
     }
 }
