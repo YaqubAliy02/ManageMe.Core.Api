@@ -37,6 +37,8 @@ namespace ManageMe.Core.Api.Tests.Unit.Services.Foundations
                 );
         }
 
+        private string GetRandomString() => new MnemonicString().GetValue();
+
         private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException) =>
             actualException => actualException.SameExceptionAs(expectedException);
 

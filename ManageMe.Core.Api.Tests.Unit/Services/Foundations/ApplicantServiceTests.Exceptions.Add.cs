@@ -3,6 +3,8 @@
 // Manage your academy easily
 //===========================
 
+using EFxceptions.Models.Exceptions;
+using FluentAssertions;
 using ManageMe.Core.Api.Models.Applicants;
 using ManageMe.Core.Api.Models.Applicants.Exceptions;
 using Microsoft.Data.SqlClient;
@@ -46,6 +48,50 @@ namespace ManageMe.Core.Api.Tests.Unit.Services.Foundations
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogCritical(It.Is(SameExceptionAs(
                     expectedApplicantDependencyException))), Times.Once);
+
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowDependencyValidationExceptionOnAddIfDuplicateKeyErrorOccursAndLogItAsync()
+        {
+            // given
+            string someMessage = GetRandomString();
+            Applicant someApplicant = CreateRandomApplicant();
+            var duplicateKeyException = new DuplicateKeyException(someMessage);
+
+            var alreadyExistsApplicantException =
+                new AlreadyExistsApplicantException(
+                    message: "Appliacant already exists.",
+                    innerException: duplicateKeyException);
+
+            var expectedApplicantDependencyValidationException =
+                new ApplicantDependencyValidationException(
+                    message: "Applicant dependency validation error occurred. Fix the error and try again.",
+                    innerException: alreadyExistsApplicantException);
+
+            this.storageBrokerMock.Setup(broker =>
+                broker.InsertApplicantAsync(someApplicant)).ThrowsAsync(duplicateKeyException);
+
+            // when
+            ValueTask<Applicant> addApplicantTask =
+                this.applicantService.AddApplicantAsync(someApplicant);
+
+            var actualApplicantDependencyValidationException =
+                await Assert.ThrowsAsync<ApplicantDependencyValidationException>(addApplicantTask.AsTask);
+
+            // then
+            actualApplicantDependencyValidationException.Should()
+                .BeEquivalentTo(expectedApplicantDependencyValidationException);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.InsertApplicantAsync(someApplicant), Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedApplicantDependencyValidationException))), Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
