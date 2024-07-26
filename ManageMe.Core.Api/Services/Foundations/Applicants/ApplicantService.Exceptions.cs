@@ -46,6 +46,14 @@ namespace ManageMe.Core.Api.Services.Foundations.Applicants
 
                 throw CreateAndLogCriticalDependencyException(failedApplicantStorageException);
             }
+            catch(Exception exception)
+            {
+                var failedApplicantServiceException = new FailedApplicantServiceException(
+                    message: "Failed applicant service error occurred, contact support",
+                    innerException:exception);
+
+                throw CreateAndLogServiceException(failedApplicantServiceException);
+            }
         }
 
         private ApplicantValidationException CreateAndLogValidationException(
@@ -74,6 +82,17 @@ namespace ManageMe.Core.Api.Services.Foundations.Applicants
         {
             var applicantDependencyException = new ApplicantDependencyValidationException(
                 message: "Applicant dependency validation error occurred. Fix the error and try again.",
+                innerException: exception);
+
+            this.loggingBroker.LogError(applicantDependencyException);
+
+            return applicantDependencyException;
+        }
+
+        private ApplicantServiceException CreateAndLogServiceException(Xeption exception)
+        {
+            var applicantDependencyException = new ApplicantServiceException(
+                message: "Applicant service error occurred, contact support",
                 innerException: exception);
 
             this.loggingBroker.LogError(applicantDependencyException);
