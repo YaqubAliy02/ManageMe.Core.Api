@@ -24,6 +24,10 @@ namespace ManageMe.Core.Api.Services.Foundations.Applicants
             {
                 throw CreateAndLogValidationException(nullApplicantException);
             }
+            catch(InvalidApplicantException invalidApplicantException)
+            {
+                throw CreateAndLogValidationException(invalidApplicantException);
+            }
         }
 
         private ApplicantValidationException CreateAndLogValidationException(

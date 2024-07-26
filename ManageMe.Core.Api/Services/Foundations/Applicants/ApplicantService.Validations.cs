@@ -31,7 +31,7 @@ namespace ManageMe.Core.Api.Services.Foundations.Applicants
         private static dynamic IsInvalid(string text) => new
         {
             Condition = String.IsNullOrWhiteSpace(text),
-            Message = "Id is required"
+            Message = "Text is required"
         };
 
         private static void ValidateApplicantNotNull(Applicant applicant)
@@ -45,7 +45,7 @@ namespace ManageMe.Core.Api.Services.Foundations.Applicants
         private static void Validate(params (dynamic Rule, string Parameter)[] validations)
         {
             var invalidClientException = new InvalidApplicantException(
-                message: "Applicant is invalid");
+                message: "Applicant is invalid.");
 
             foreach((dynamic rule, string parameter) in validations)
             {
