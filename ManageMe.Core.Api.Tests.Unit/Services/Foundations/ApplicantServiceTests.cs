@@ -45,6 +45,18 @@ namespace ManageMe.Core.Api.Tests.Unit.Services.Foundations
         private Applicant CreateRandomApplicant() =>
             CreateApplicantFiller(GetRandomDateTime()).Create();
 
+        private static IQueryable<Applicant> GetRandomApplicants()
+        {
+            return CreateApplicantFiller(dates: GetRandomDateTimeOffset())
+                .Create(count: GetRandomNumber()).AsQueryable();
+        }
+
+        private static DateTimeOffset GetRandomDateTimeOffset() =>
+            new DateTimeRange(earliestDate: new DateTime()).GetValue();
+
+        private static int GetRandomNumber() =>
+            new IntRange(min: 2, max: 9).GetValue();
+
         private static DateTimeOffset GetRandomDateTime() =>
             new DateTimeRange(earliestDate: DateTime.UnixEpoch).GetValue();
 

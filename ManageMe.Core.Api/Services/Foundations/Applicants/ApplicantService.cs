@@ -33,5 +33,10 @@ namespace ManageMe.Core.Api.Services.Foundations.Applicants
 
                 return await this.storageBroker.InsertApplicantAsync(applicant);
             });
+
+        public IQueryable<Applicant> RetrieveAllApplicants()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
