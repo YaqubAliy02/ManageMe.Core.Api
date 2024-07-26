@@ -4,11 +4,13 @@
 //===========================
 
 using System.Linq.Expressions;
+using System.Runtime.Serialization;
 using ManageMe.Core.Api.Brokers.DateTimes;
 using ManageMe.Core.Api.Brokers.Loggings;
 using ManageMe.Core.Api.Brokers.Storages;
 using ManageMe.Core.Api.Models.Applicants;
 using ManageMe.Core.Api.Services.Foundations.Applicants;
+using Microsoft.Data.SqlClient;
 using Moq;
 using Tynamix.ObjectFiller;
 using Xeptions;
@@ -43,6 +45,9 @@ namespace ManageMe.Core.Api.Tests.Unit.Services.Foundations
 
         private static DateTimeOffset GetRandomDateTime() =>
             new DateTimeRange(earliestDate: DateTime.UnixEpoch).GetValue();
+
+        private static SqlException GetSqlError() =>
+            (SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
 
         private static Filler<Applicant> CreateApplicantFiller(DateTimeOffset dates)
         {
