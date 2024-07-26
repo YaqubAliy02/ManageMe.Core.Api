@@ -71,6 +71,14 @@ namespace ManageMe.Core.Api.Services.Foundations.Applicants
 
                 throw CreateAndLogCriticalDependencyException(failedApplicantServiceException);
             }
+            catch(Exception exception)
+            {
+                var failedApplicantServiceException = new FailedApplicantServiceException(
+                    message: "Failed applicant service error occurred, contact support",
+                    innerException: exception);
+
+                throw CreateAndLogServiceException(failedApplicantServiceException);
+            }
         }
         private ApplicantValidationException CreateAndLogValidationException(
             Xeption exception)
