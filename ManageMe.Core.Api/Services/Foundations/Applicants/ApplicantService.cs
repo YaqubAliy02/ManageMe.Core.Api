@@ -35,6 +35,6 @@ namespace ManageMe.Core.Api.Services.Foundations.Applicants
             });
 
         public IQueryable<Applicant> RetrieveAllApplicants() =>
-            this.storageBroker.SelectAllApplicants();
+           TryCatch(() => this.storageBroker.SelectAllApplicants());
     }
 }

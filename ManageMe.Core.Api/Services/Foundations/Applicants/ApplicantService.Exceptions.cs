@@ -14,7 +14,7 @@ namespace ManageMe.Core.Api.Services.Foundations.Applicants
     public partial class ApplicantService
     {
         private delegate ValueTask<Applicant> ReturningApplicantFunction();
-
+        private delegate IQueryable<Applicant> ReturningApplicantsFunction();
         private async ValueTask<Applicant> TryCatch(
             ReturningApplicantFunction returningApplicantFunction)
         {
@@ -53,6 +53,23 @@ namespace ManageMe.Core.Api.Services.Foundations.Applicants
                     innerException:exception);
 
                 throw CreateAndLogServiceException(failedApplicantServiceException);
+            }
+        }
+
+        private IQueryable<Applicant> TryCatch(
+            ReturningApplicantsFunction returningApplicantsFunction)
+        {
+            try
+            {
+                return returningApplicantsFunction();
+            }
+            catch (SqlException sqlException)
+            {
+                var failedApplicantServiceException = new FailedApplicantServiceException(
+                    message: "Failed applicant storage error occurred, contact support",
+                    innerException: sqlException);
+
+                throw CreateAndLogCriticalDependencyException(failedApplicantServiceException);
             }
         }
         private ApplicantValidationException CreateAndLogValidationException(
