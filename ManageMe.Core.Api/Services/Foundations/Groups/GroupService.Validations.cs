@@ -64,12 +64,12 @@ namespace ManageMe.Core.Api.Services.Foundations.Groups
         {
             if (group == null)
             {
-                throw new NullGroupException();
+                throw new NullGroupException(message: "Group is null.");
             }
         }
         private static void Validate(params (dynamic Rule, string Parameter)[] validations)
         {
-            var invalidClientException = new InvalidGroupException();
+            var invalidClientException = new InvalidGroupException(message: "Group is invalid.");
 
             foreach ((dynamic rule, string parameter) in validations)
             {
