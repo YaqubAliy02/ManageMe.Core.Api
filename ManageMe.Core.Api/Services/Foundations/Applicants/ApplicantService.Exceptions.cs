@@ -3,6 +3,7 @@
 // Manage your academy easily
 //===========================
 
+using EFxceptions.Models.Exceptions;
 using ManageMe.Core.Api.Models.Applicants;
 using ManageMe.Core.Api.Models.Applicants.Exceptions;
 using Microsoft.Data.SqlClient;
@@ -25,11 +26,19 @@ namespace ManageMe.Core.Api.Services.Foundations.Applicants
             {
                 throw CreateAndLogValidationException(nullApplicantException);
             }
-            catch(InvalidApplicantException invalidApplicantException)
+            catch (InvalidApplicantException invalidApplicantException)
             {
                 throw CreateAndLogValidationException(invalidApplicantException);
             }
-            catch(SqlException  sqlException)
+            catch (DuplicateKeyException duplicateKeyException)
+            {
+                var alreadyExistsApplicantException = new AlreadyExistsApplicantException(
+                    message: "Appliacant already exists.",
+                    innerException: duplicateKeyException);
+
+                throw CreateAndLogDependencyValidationException(alreadyExistsApplicantException);
+            }
+            catch (SqlException sqlException)
             {
                 var failedApplicantStorageException = new FailedApplicantStorageException(
                     message: "Failed applicant storage error occurred, contact support",
@@ -38,7 +47,6 @@ namespace ManageMe.Core.Api.Services.Foundations.Applicants
                 throw CreateAndLogCriticalDependencyException(failedApplicantStorageException);
             }
         }
-
 
         private ApplicantValidationException CreateAndLogValidationException(
             Xeption exception)
@@ -58,6 +66,17 @@ namespace ManageMe.Core.Api.Services.Foundations.Applicants
                 innerException: exception);
 
             this.loggingBroker.LogCritical(applicantDependencyException);
+
+            return applicantDependencyException;
+        }
+
+        private ApplicantDependencyValidationException CreateAndLogDependencyValidationException(Xeption exception)
+        {
+            var applicantDependencyException = new ApplicantDependencyValidationException(
+                message: "Applicant dependency validation error occurred. Fix the error and try again.",
+                innerException: exception);
+
+            this.loggingBroker.LogError(applicantDependencyException);
 
             return applicantDependencyException;
         }
