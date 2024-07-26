@@ -10,5 +10,6 @@ namespace ManageMe.Core.Api.Services.Foundations.Applicants
     public interface IApplicantService
     {
         ValueTask<Applicant> AddApplicantAsync(Applicant applicant);
+        IQueryable<Applicant> RetrieveAllApplicants();
     }
 }

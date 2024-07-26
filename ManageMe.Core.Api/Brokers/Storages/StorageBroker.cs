@@ -4,9 +4,6 @@
 //===========================
 
 using EFxceptions;
-using ManageMe.Core.Api.Models.Applicants;
-using ManageMe.Core.Api.Models.Groups;
-using ManageMe.Core.Api.Models.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace ManageMe.Core.Api.Brokers.Storages
