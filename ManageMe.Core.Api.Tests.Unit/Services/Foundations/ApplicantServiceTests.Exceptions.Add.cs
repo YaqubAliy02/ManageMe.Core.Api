@@ -97,5 +97,46 @@ namespace ManageMe.Core.Api.Tests.Unit.Services.Foundations
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public async Task ShouldThrowServiceExceptionOnAddIfServiceErrorOccursAndLogItAsync()
+        {
+            //given
+            Applicant someApplicant = CreateRandomApplicant();
+
+            var serviceException = new Exception();
+
+            var failedApplicantServiceException =
+                new FailedApplicantServiceException(
+                    message: "Failed applicant service error occurred, contact support",
+                    innerException: serviceException);
+
+            var excpectedApplicantServiceException =
+                new ApplicantServiceException(
+                    message: "Applicant service error occurred, contact support",
+                    innerException:failedApplicantServiceException);
+
+            this.storageBrokerMock.Setup(broker =>
+                broker.InsertApplicantAsync(someApplicant)).ThrowsAsync(serviceException);
+
+            //when
+            ValueTask<Applicant> addApplicantTask =
+                this.applicantService.AddApplicantAsync(someApplicant);
+
+            //then
+            await Assert.ThrowsAsync<ApplicantServiceException>(() =>
+                addApplicantTask.AsTask());
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.InsertApplicantAsync(someApplicant), Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    excpectedApplicantServiceException))), Times.Once);
+
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
