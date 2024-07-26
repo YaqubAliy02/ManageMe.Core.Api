@@ -47,7 +47,6 @@ namespace ManageMe.Core.Api.Tests.Unit.Services.Foundations
             this.storageBrokerMock.VerifyNoOtherCalls();
         }
 
-
         [Theory]
         [InlineData(null)]
         [InlineData("")]

@@ -21,7 +21,7 @@ namespace ManageMe.Core.Api.Tests.Unit.Services.Foundations
             var failedStorageApplicantException =
                 new FailedApplicantStorageException(
                     message: "Failed applicant storage error occurred, contact support",
-                    innerException:sqlException);
+                    innerException: sqlException);
 
             var expectedApplicantDependencyException =
                 new ApplicantDependencyException(
@@ -63,12 +63,12 @@ namespace ManageMe.Core.Api.Tests.Unit.Services.Foundations
             var failedApplicantServiceException =
                 new FailedApplicantServiceException(
                     message: "Failed applicant service error occurred, contact support",
-                    innerException:serviceException);
+                    innerException: serviceException);
 
             var expectedApplicantServiceException =
                 new ApplicantServiceException(
                     message: "Appplicant service error occurred, contact support",
-                    innerException:failedApplicantServiceException);
+                    innerException: failedApplicantServiceException);
 
             this.storageBrokerMock.Setup(broker =>
                 broker.SelectAllApplicants()).Throws(serviceException);

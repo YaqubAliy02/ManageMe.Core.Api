@@ -13,7 +13,7 @@ namespace ManageMe.Core.Api.Tests.Unit.Services.Foundations
     public partial class ApplicantServiceTests
     {
         [Fact]
-        public  async Task ShouldAddApplicantAsync()
+        public async Task ShouldAddApplicantAsync()
         {
             //given
             Applicant randomApplicant = CreateRandomApplicant();

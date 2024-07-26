@@ -71,6 +71,6 @@ namespace ManageMe.Core.Api.Tests.Unit.Services.Foundations
                 .OnType<DateTimeOffset>().Use(dates);
 
             return filler;
-        }   
+        }
     }
 }

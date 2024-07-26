@@ -3,7 +3,6 @@
 // Manage your academy easily
 //===========================
 
-using System.Text.RegularExpressions;
 using ManageMe.Core.Api.Models.Users;
 using Microsoft.EntityFrameworkCore;
 

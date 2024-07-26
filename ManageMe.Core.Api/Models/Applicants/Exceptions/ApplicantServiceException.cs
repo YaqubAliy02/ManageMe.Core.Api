@@ -10,6 +10,6 @@ namespace ManageMe.Core.Api.Models.Applicants.Exceptions
     public class ApplicantServiceException : Xeption
     {
         public ApplicantServiceException(string message, Xeption innerException) : base() { }
-        
+
     }
 }

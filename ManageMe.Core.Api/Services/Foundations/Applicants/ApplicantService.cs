@@ -17,7 +17,7 @@ namespace ManageMe.Core.Api.Services.Foundations.Applicants
         private readonly IDateTimeBroker dateTimeBroker;
 
         public ApplicantService(
-            IStorageBroker storageBroker, 
+            IStorageBroker storageBroker,
             ILoggingBroker loggingBroker,
             IDateTimeBroker dateTimeBroker)
         {

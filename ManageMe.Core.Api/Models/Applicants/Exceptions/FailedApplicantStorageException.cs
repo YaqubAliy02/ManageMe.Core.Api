@@ -10,7 +10,7 @@ namespace ManageMe.Core.Api.Models.Applicants.Exceptions
     public class FailedApplicantStorageException : Xeption
     {
         public FailedApplicantStorageException(string message, Exception innerException)
-            :base(message) { }
-        
+            : base(message) { }
+
     }
 }

@@ -15,7 +15,7 @@ namespace ManageMe.Core.Api.Services.Foundations.Applicants
             ValidateApplicantNotNull(applicant);
 
             Validate(
-                (Rule: IsInvalid(applicant.ApplicantId), Parameter : nameof(Applicant.ApplicantId)),
+                (Rule: IsInvalid(applicant.ApplicantId), Parameter: nameof(Applicant.ApplicantId)),
                 (Rule: IsInvalid(applicant.FirstName), Parameter: nameof(Applicant.FirstName)),
                 (Rule: IsInvalid(applicant.LastName), Parameter: nameof(Applicant.LastName)),
                 (Rule: IsInvalid(applicant.Email), Parameter: nameof(Applicant.Email)),
@@ -25,7 +25,7 @@ namespace ManageMe.Core.Api.Services.Foundations.Applicants
         private static dynamic IsInvalid(Guid applicantId) => new
         {
             Condition = applicantId == default,
-            Message =  "Id is required"
+            Message = "Id is required"
         };
 
         private static dynamic IsInvalid(string text) => new
@@ -47,7 +47,7 @@ namespace ManageMe.Core.Api.Services.Foundations.Applicants
             var invalidClientException = new InvalidApplicantException(
                 message: "Applicant is invalid.");
 
-            foreach((dynamic rule, string parameter) in validations)
+            foreach ((dynamic rule, string parameter) in validations)
             {
                 if (rule.Condition)
                 {

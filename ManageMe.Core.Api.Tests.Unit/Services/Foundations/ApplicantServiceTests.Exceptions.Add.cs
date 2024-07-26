@@ -114,7 +114,7 @@ namespace ManageMe.Core.Api.Tests.Unit.Services.Foundations
             var excpectedApplicantServiceException =
                 new ApplicantServiceException(
                     message: "Applicant service error occurred, contact support",
-                    innerException:failedApplicantServiceException);
+                    innerException: failedApplicantServiceException);
 
             this.storageBrokerMock.Setup(broker =>
                 broker.InsertApplicantAsync(someApplicant)).ThrowsAsync(serviceException);
