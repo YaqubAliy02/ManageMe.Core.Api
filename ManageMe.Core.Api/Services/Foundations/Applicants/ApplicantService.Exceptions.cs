@@ -55,7 +55,6 @@ namespace ManageMe.Core.Api.Services.Foundations.Applicants
                 throw CreateAndLogServiceException(failedApplicantServiceException);
             }
         }
-
         private ApplicantValidationException CreateAndLogValidationException(
             Xeption exception)
         {
