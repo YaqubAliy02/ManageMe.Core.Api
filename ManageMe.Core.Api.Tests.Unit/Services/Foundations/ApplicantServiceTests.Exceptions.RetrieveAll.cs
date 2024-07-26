@@ -52,5 +52,46 @@ namespace ManageMe.Core.Api.Tests.Unit.Services.Foundations
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public void ShouldThrowServiceExceptionOnRetrieveAllIfServiceErrorOccursLogIt()
+        {
+            //given
+            string someMessage = GetRandomString();
+            var serviceException = new Exception(someMessage);
+
+            var failedApplicantServiceException =
+                new FailedApplicantServiceException(
+                    message: "Failed applicant service error occurred, contact support",
+                    innerException:serviceException);
+
+            var expectedApplicantServiceException =
+                new ApplicantServiceException(
+                    message: "Appplicant service error occurred, contact support",
+                    innerException:failedApplicantServiceException);
+
+            this.storageBrokerMock.Setup(broker =>
+                broker.SelectAllApplicants()).Throws(serviceException);
+
+            //when
+            Action retrieveAllApplicantsAction = () =>
+            this.applicantService.RetrieveAllApplicants();
+
+            ApplicantServiceException ApplicantServiceException =
+                Assert.Throws<ApplicantServiceException>(retrieveAllApplicantsAction);
+
+            //then
+            ApplicantServiceException.Should().BeEquivalentTo(expectedApplicantServiceException);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.SelectAllApplicants(), Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedApplicantServiceException))), Times.Once);
+
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
