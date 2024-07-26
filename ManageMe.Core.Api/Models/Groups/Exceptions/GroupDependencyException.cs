@@ -9,7 +9,7 @@ namespace ManageMe.Core.Api.Models.Groups.Exceptions
 {
     public class GroupDependencyException : Xeption
     {
-        public GroupDependencyException(string message, Xeption innerException) 
-            :base(message, innerException) { }
+        public GroupDependencyException(string message, Xeption innerException)
+            : base(message, innerException) { }
     }
 }

@@ -3,7 +3,6 @@
 // Manage your academy easily
 //===========================
 
-using System;
 using EFxceptions.Models.Exceptions;
 using ManageMe.Core.Api.Models.Groups;
 using ManageMe.Core.Api.Models.Groups.Exceptions;
@@ -44,7 +43,7 @@ namespace ManageMe.Core.Api.Services.Foundations.Groups
             {
                 var failedGroupStorageException = new FailedGroupStorageException(
                    message: "Failed group storage error occurred, contact support.",
-                   innerException:  sqlException);
+                   innerException: sqlException);
 
                 throw CreateAndLogCriticalDependencyException(failedGroupStorageException);
             }

@@ -9,7 +9,7 @@ namespace ManageMe.Core.Api.Models.Groups.Exceptions
 {
     public class NullGroupException : Xeption
     {
-        public NullGroupException(string message) 
-            :base(message) { }
+        public NullGroupException(string message)
+            : base(message) { }
     }
 }

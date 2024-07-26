@@ -33,7 +33,7 @@ namespace ManageMe.Core.Api.Services.Foundations.Groups
         public IQueryable<Group> RetrieveAllGroups() =>
           TryCatch(() => this.storageBroker.SelectAllGroups());
 
-        public  ValueTask<Group> ModifyGroupAsync(Group group) =>
+        public ValueTask<Group> ModifyGroupAsync(Group group) =>
              TryCatch(async () =>
              {
                  ValidateGroupOnModify(group);

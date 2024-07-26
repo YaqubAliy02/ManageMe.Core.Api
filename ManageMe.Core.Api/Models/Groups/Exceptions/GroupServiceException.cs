@@ -10,6 +10,6 @@ namespace ManageMe.Core.Api.Models.Groups.Exceptions
     public class GroupServiceException : Xeption
     {
         public GroupServiceException(string message, Xeption innerException)
-            :base(message, innerException) { }
+            : base(message, innerException) { }
     }
 }

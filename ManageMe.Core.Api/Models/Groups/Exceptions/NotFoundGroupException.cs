@@ -9,7 +9,7 @@ namespace ManageMe.Core.Api.Models.Groups.Exceptions
 {
     public class NotFoundGroupException : Xeption
     {
-        public NotFoundGroupException(string message) 
+        public NotFoundGroupException(string message)
             : base(message) { }
     }
 }
