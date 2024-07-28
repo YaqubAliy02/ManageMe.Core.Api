@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Bytescout.Spreadsheet" Version="4.7.1.2054" />
     <PackageReference Include="EFxceptions" Version="0.4.5" />
+    <PackageReference Include="Google.Apis.Sheets.v4" Version="1.68.0.3484" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
       <PrivateAssets>all</PrivateAssets>
