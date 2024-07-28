@@ -22,6 +22,41 @@ namespace ManageMe.Core.Api.Services.Foundations.Applicants
                 (Rule: IsInvalid(applicant.PhoneNumber), Parameter: nameof(Applicant.PhoneNumber)));
         }
 
+        private void ValidateApplicantOnModify(Applicant applicant)
+        {
+            ValidateApplicantNotNull(applicant);
+
+            Validate(
+                (Rule: IsInvalid(applicant.ApplicantId), Parameter: nameof(Applicant.ApplicantId)),
+                (Rule: IsInvalid(applicant.FirstName), Parameter: nameof(Applicant.FirstName)),
+                (Rule: IsInvalid(applicant.LastName), Parameter: nameof(Applicant.LastName)),
+                (Rule: IsInvalid(applicant.Email), Parameter: nameof(Applicant.Email)),
+                (Rule: IsInvalid(applicant.PhoneNumber), Parameter: nameof(Applicant.PhoneNumber)));
+        }
+        private void ValidateAgainstStorageApplicantOnModify(Applicant inputAccount, Applicant storageApplicant)
+        {
+            ValidateStorageApplicant(storageApplicant, inputAccount.ApplicantId);
+
+            Validate(
+                (Rule: IsInvalid(inputAccount.ApplicantId), Parameter: nameof(Applicant.ApplicantId)),
+                (Rule: IsInvalid(inputAccount.FirstName), Parameter: nameof(Applicant.FirstName)),
+                (Rule: IsInvalid(inputAccount.LastName), Parameter: nameof(Applicant.LastName)),
+                (Rule: IsInvalid(inputAccount.Email), Parameter: nameof(Applicant.Email)),
+                (Rule: IsInvalid(inputAccount.PhoneNumber), Parameter: nameof(Applicant.PhoneNumber)));
+        }
+        private void ValidateApplicantId(Guid applicantId) =>
+            Validate((Rule: IsInvalid(applicantId), Parameter: nameof(Applicant.ApplicantId)));
+
+        private void ValidateStorageApplicant(Applicant maybeApplicant, Guid applicantid)
+        {
+            if (maybeApplicant is null)
+            {
+                throw new NotFoundApplicantException(
+                    $"Applicant is not found with id: {applicantid}.");
+            }
+        }
+
+
         private static dynamic IsInvalid(Guid applicantId) => new
         {
             Condition = applicantId == default,

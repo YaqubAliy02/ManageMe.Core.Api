@@ -24,7 +24,7 @@ namespace ManageMe.Core.Api.Brokers.Storages
         public async ValueTask<User> SelectUserByEmailAndPasswordAsync(string email, string password) =>
            await this.SelectAsync<User>(email, password);
 
-        public async ValueTask<User> UpdateAppolicantAsync(User user) =>
+        public async ValueTask<User> UpdateApplicantAsync(User user) =>
             await this.UpdateAsync(user);
 
         public async ValueTask<User> DeleteUserAsync(User user) =>

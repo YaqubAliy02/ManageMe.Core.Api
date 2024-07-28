@@ -30,7 +30,7 @@ namespace ManageMe.Core.Api.Services.Foundations.Users
             this.storageBroker.SelectAllUsers();
 
         public async ValueTask<User> ModifyUserAsync(User user) =>
-            await this.storageBroker.UpdateAppolicantAsync(user);
+            await this.storageBroker.UpdateApplicantAsync(user);
 
         public async ValueTask<User> RemoveUserAsync(Guid userid)
         {

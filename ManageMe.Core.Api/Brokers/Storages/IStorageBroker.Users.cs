@@ -13,7 +13,7 @@ namespace ManageMe.Core.Api.Brokers.Storages
         IQueryable<User> SelectAllUsers();
         ValueTask<User> SelectUserByIdAsync(Guid userId);
         ValueTask<User> SelectUserByEmailAndPasswordAsync(string email, string password);
-        ValueTask<User> UpdateAppolicantAsync(User user);
+        ValueTask<User> UpdateApplicantAsync(User user);
         ValueTask<User> DeleteUserAsync(User user);
     }
 }
