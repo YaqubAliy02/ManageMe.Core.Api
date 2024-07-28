@@ -46,8 +46,6 @@ namespace ManageMe.Core.Api.Services.Foundations.Groups
                  return await this.storageBroker.UpdateGroupAsync(group);
              });
 
-
-
         public ValueTask<Group> RetrieveGroupByIdAsync(Guid groupId) =>
             TryCatch(async () =>
               {
@@ -59,5 +57,16 @@ namespace ManageMe.Core.Api.Services.Foundations.Groups
 
                   return await this.storageBroker.SelectGroupByIdAsync(groupId);
               });
+
+        public async ValueTask<Group> RemoveGroupAsync(Guid groupid)
+        {
+            ValidateGroupId(groupid);
+
+            var maybeGroup = await this.storageBroker.SelectGroupByIdAsync(groupid);
+
+            ValidateStorageGroup(maybeGroup, groupid);
+
+            return await this.storageBroker.DeleteGroupAsync(maybeGroup);
+        }
     }
 }
