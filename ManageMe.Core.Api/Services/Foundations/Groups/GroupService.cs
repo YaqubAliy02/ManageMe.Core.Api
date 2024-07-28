@@ -46,8 +46,6 @@ namespace ManageMe.Core.Api.Services.Foundations.Groups
                  return await this.storageBroker.UpdateGroupAsync(group);
              });
 
-
-
         public ValueTask<Group> RetrieveGroupByIdAsync(Guid groupId) =>
             TryCatch(async () =>
               {
