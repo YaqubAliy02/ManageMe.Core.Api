@@ -20,11 +20,11 @@ using ManageMe.Core.Api.Services.Processings.Users;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddControllers();
+builder.Services.AddControllersWithViews(); // Add MVC services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<IStorageBroker, StorageBroker>();
+
+builder.Services.AddTransient<IStorageBroker, StorageBroker>();
 builder.Services.AddTransient<IDateTimeBroker, DateTimeBroker>();
 builder.Services.AddTransient<ILoggingBroker, LoggingBroker>();
 builder.Services.AddTransient<IOrchestrationService, OrchestrationService>();
@@ -47,7 +47,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
 
 app.MapControllers();

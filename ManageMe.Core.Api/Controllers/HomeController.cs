@@ -7,12 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ManageMe.Core.Api.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class HomeController : ControllerBase
     {
         [HttpGet]
-        public ActionResult Get()
-        {
-            return Ok("Welcome to MasterStream Project");
-        }
+        public IActionResult Get() =>  Ok("Hello to my project");
     }
 }
