@@ -34,7 +34,7 @@ namespace ManageMe.Core.Api.Services.Processings.Applicants
             {
                 var alreadyExistsApplicantException =
                     new AlreadyExistsApplicantException(
-                        message: "Appliacant already exists.",
+                        message: "Applicant already exists.",
                        innerException: duplicateKeyException);
 
                 throw CreateAndALogDependencyValidationException(alreadyExistsApplicantException);
